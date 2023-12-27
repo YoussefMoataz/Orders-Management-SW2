@@ -1,9 +1,13 @@
 package com.sw2.onms.order.components;
 
 import com.sw2.onms.product.model.Product;
+import jakarta.persistence.DiscriminatorColumn;
+import jakarta.persistence.Entity;
 
 import java.util.List;
 
+@Entity
+@DiscriminatorColumn(name = "compound_order")
 public class CompoundOrder extends OrderComponent{
 
     private List<OrderComponent> components;

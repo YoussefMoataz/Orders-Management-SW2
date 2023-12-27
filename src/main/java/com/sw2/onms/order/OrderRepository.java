@@ -2,13 +2,21 @@ package com.sw2.onms.order;
 
 import com.sw2.onms.order.components.Order;
 import com.sw2.onms.order.components.OrderComponent;
-import org.springframework.data.repository.Repository;
 
-public interface OrderRepository extends Repository<OrderComponent, Integer> {
+public class OrderRepository {
 
-    void addOrder(Order order);
-    void removeOrder(int orderID);
-    void updateState(int orderID, OrderState orderState);
-    OrderComponent searchOrder(int orderID);
+    void addOrder(Order order){
+        // todo
+    }
+    void removeOrder(int orderID){
+        // todo
+    }
+    void updateState(int orderID, OrderState orderState){
+        // todo
+    }
+    OrderComponent searchOrder(int orderID){
+        // todo
+        return null;
+    }
 
 }

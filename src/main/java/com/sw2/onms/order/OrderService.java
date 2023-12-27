@@ -6,11 +6,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class OrderService {
 
-    private final OrderRepository orderRepository;
+    private OrderRepository orderRepository;
     private int shippingFees;
 
-    public OrderService(OrderRepository orderRepository) {
-        this.orderRepository = orderRepository;
+    public OrderService() {
+        this.orderRepository = new OrderRepository();
     }
 
     public void listOrdersDetails(){

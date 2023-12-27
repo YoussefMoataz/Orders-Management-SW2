@@ -3,14 +3,11 @@ package com.sw2.onms.order.components;
 import com.sw2.onms.customer.model.Customer;
 import com.sw2.onms.order.OrderState;
 import com.sw2.onms.product.model.Product;
-import jakarta.persistence.*;
 
 import java.util.List;
 
-@Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "order_component")
 public abstract class OrderComponent {
+
     private int orderID;
     private List<Product> products;
     private String address;

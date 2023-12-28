@@ -1,9 +1,9 @@
 package com.sw2.onms.product.controller;
 
 import com.sw2.onms.product.model.Product;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import com.sw2.onms.product.service.*;
+import com.sw2.onms.product.repo.ProductsRepo;
+import com.sw2.onms.product.service.ProductsService;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -11,13 +11,24 @@ import java.util.List;
 @RequestMapping("/product")
 public class ProductController {
     ProductsService productsService;
+    ProductController(ProductsRepo productsRepo){
+        this.productsService = new ProductsService(productsRepo);
+    }
 
-    Product addProduct(Product product){return productsService.addProduct(product);}
-    boolean updateProduct(long serialNumber, Product product){return productsService.updateProduct(serialNumber, product);}
-    boolean deleteProduct(Product product){return productsService.deleteProduct(product);}
-    Product getProductBySerialNumber(long serialNumber){return productsService.getProductBySerialNumber(serialNumber);}
-    Product getProductByName(String name){return productsService.getProductByName(name);}
-    List<Product> getProductsByCategory(String category){return productsService.getProductsByCategory(category);}
+    @PostMapping("/add")
+    Product addProduct(@RequestBody Product product){return productsService.addProduct(product);}
+    @PutMapping("/update/{serialNumber}")
+    Product updateProduct(@PathVariable long serialNumber, @RequestBody Product product){return productsService.updateProduct(serialNumber, product);}
+    @DeleteMapping("/delete/{serialNumber}")
+    Product deleteProduct(@PathVariable long serialNumber){return productsService.deleteProduct(serialNumber);}
+    @GetMapping("/search/serial/{serialNumber}")
+    Product getProductBySerialNumber(@PathVariable long serialNumber){return productsService.getProductBySerialNumber(serialNumber);}
+    @GetMapping("/search/name/{name}")
+    Product getProductByName(@PathVariable String name){return productsService.getProductByName(name);}
+    @GetMapping("/search/category/{category}")
+    List<Product> getProductsByCategory(@PathVariable String category){return productsService.getProductsByCategory(category);}
+    @GetMapping("/search/all")
     List<Product> getProducts(){return productsService.getProducts();}
+    @GetMapping("search/available")
     List<Product> getAvailableProducts(){return productsService.getAvailableProducts();}
 }

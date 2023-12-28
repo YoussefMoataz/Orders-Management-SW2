@@ -13,8 +13,8 @@ public class ProductController {
     ProductsService productsService;
 
     Product addProduct(Product product){return productsService.addProduct(product);}
-    boolean updateProduct(long serialNumber, Product product){return productsService.updateProduct(serialNumber, product);}
-    boolean deleteProduct(Product product){return productsService.deleteProduct(product);}
+    Product updateProduct(long serialNumber, Product product){return productsService.updateProduct(serialNumber, product);}
+    Product deleteProduct(Long serialNumber){return productsService.deleteProduct(serialNumber);}
     Product getProductBySerialNumber(long serialNumber){return productsService.getProductBySerialNumber(serialNumber);}
     Product getProductByName(String name){return productsService.getProductByName(name);}
     List<Product> getProductsByCategory(String category){return productsService.getProductsByCategory(category);}

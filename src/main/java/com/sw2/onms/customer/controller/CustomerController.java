@@ -15,6 +15,6 @@ public class CustomerController {
     public Customer addCustomer(Customer customer){return customersService.addCustomer(customer);}
     public Customer getCustomer(String email){return customersService.getCustomer(email);}
     public List<Customer> getCustomers(){return customersService.getCustomers();}
-    public boolean updateCustomer(String email, Customer customer){return customersService.updateCustomer(email, customer);}
-    public boolean deleteCustomer(Customer customer){return customersService.deleteCustomer(customer);}
+    public Customer updateCustomer(String email, Customer customer){return customersService.updateCustomer(email, customer);}
+    public Customer deleteCustomer(String email){return customersService.deleteCustomer(email);}
 }

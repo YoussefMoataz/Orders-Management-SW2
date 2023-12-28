@@ -1,9 +1,9 @@
 package com.sw2.onms.product.controller;
 
 import com.sw2.onms.product.model.Product;
+import com.sw2.onms.product.service.ProductsService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.sw2.onms.product.service.*;
 
 import java.util.List;
 

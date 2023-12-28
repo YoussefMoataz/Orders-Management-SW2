@@ -1,11 +1,13 @@
 package com.sw2.onms.product.repo;
 
 import com.sw2.onms.product.model.Product;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+@Repository
 public class ProductsRepo {
     private final HashMap<Long, Product> products;
 

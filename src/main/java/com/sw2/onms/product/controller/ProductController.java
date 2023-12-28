@@ -1,6 +1,7 @@
 package com.sw2.onms.product.controller;
 
 import com.sw2.onms.product.model.Product;
+import com.sw2.onms.product.repo.ProductsRepo;
 import com.sw2.onms.product.service.ProductsService;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +11,9 @@ import java.util.List;
 @RequestMapping("/product")
 public class ProductController {
     ProductsService productsService;
+    ProductController(ProductsRepo productsRepo){
+        this.productsService = new ProductsService(productsRepo);
+    }
 
     @PostMapping("/add")
     Product addProduct(@RequestBody Product product){return productsService.addProduct(product);}

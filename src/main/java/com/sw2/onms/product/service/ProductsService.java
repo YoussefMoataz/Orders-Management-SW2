@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public class ProductsService {
     private final ProductsRepo productsRepo;
-    ProductsService(ProductsRepo productsRepo){
+    public ProductsService(ProductsRepo productsRepo){
         this.productsRepo = productsRepo;
     }
     public Product addProduct(Product product){return productsRepo.add(product);}

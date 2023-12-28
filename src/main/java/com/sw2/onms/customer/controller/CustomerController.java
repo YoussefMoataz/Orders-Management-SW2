@@ -1,6 +1,7 @@
 package com.sw2.onms.customer.controller;
 
 import com.sw2.onms.customer.model.Customer;
+import com.sw2.onms.customer.repo.CustomersRepo;
 import com.sw2.onms.customer.service.CustomersService;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +11,9 @@ import java.util.List;
 @RequestMapping("/customer")
 public class CustomerController {
     CustomersService customersService;
+    CustomerController(CustomersRepo customersRepo){
+        this.customersService = new CustomersService(customersRepo);
+    }
 
     @PostMapping("/add")
     public Customer addCustomer(@RequestBody Customer customer){return customersService.addCustomer(customer);}

@@ -1,11 +1,13 @@
 package com.sw2.onms.customer.repo;
 
 import com.sw2.onms.customer.model.Customer;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+@Repository
 public class CustomersRepo {
     private final HashMap<String, Customer> customers;
 

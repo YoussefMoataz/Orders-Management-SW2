@@ -1,9 +1,9 @@
 package com.sw2.onms.customer.controller;
 
 import com.sw2.onms.customer.model.Customer;
+import com.sw2.onms.customer.repo.CustomersRepo;
 import com.sw2.onms.customer.service.CustomersService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -11,10 +11,18 @@ import java.util.List;
 @RequestMapping("/customer")
 public class CustomerController {
     CustomersService customersService;
+    CustomerController(CustomersRepo customersRepo){
+        this.customersService = new CustomersService(customersRepo);
+    }
 
-    public Customer addCustomer(Customer customer){return customersService.addCustomer(customer);}
-    public Customer getCustomer(String email){return customersService.getCustomer(email);}
+    @PostMapping("/add")
+    public Customer addCustomer(@RequestBody Customer customer){return customersService.addCustomer(customer);}
+    @GetMapping("/get/{email}")
+    public Customer getCustomer(@PathVariable String email){return customersService.getCustomer(email);}
+    @GetMapping("/get/all")
     public List<Customer> getCustomers(){return customersService.getCustomers();}
-    public boolean updateCustomer(String email, Customer customer){return customersService.updateCustomer(email, customer);}
-    public boolean deleteCustomer(Customer customer){return customersService.deleteCustomer(customer);}
+    @PutMapping("/update/{email}")
+    public Customer updateCustomer(@PathVariable String email, @RequestBody Customer customer){return customersService.updateCustomer(email, customer);}
+    @DeleteMapping("/delete/{email}")
+    public Customer deleteCustomer(@PathVariable String email){return customersService.deleteCustomer(email);}
 }

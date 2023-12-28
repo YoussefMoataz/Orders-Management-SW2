@@ -9,15 +9,15 @@ import java.util.List;
 @Service
 public class ProductsService {
     private final ProductsRepo productsRepo;
-    ProductsService(ProductsRepo productsRepo){
+    public ProductsService(ProductsRepo productsRepo){
         this.productsRepo = productsRepo;
     }
-    public Product addProduct(Product product){return null;}
-    public boolean updateProduct(long serialNumber, Product product){return false;}
-    public boolean deleteProduct(Product product){return false;}
-    public Product getProductBySerialNumber(long serialNumber){return null;}
-    public Product getProductByName(String name){return null;}
-    public List<Product> getProductsByCategory(String category){return null;}
-    public List<Product> getProducts(){return null;}
-    public List<Product> getAvailableProducts(){return null;}
+    public Product addProduct(Product product){return productsRepo.add(product);}
+    public Product updateProduct(long serialNumber, Product product){return productsRepo.update(serialNumber, product);}
+    public Product deleteProduct(long serialNumber){return productsRepo.delete(serialNumber);}
+    public Product getProductBySerialNumber(long serialNumber){return productsRepo.getBySerialNumber(serialNumber);}
+    public Product getProductByName(String name){return productsRepo.getByName(name);}
+    public List<Product> getProductsByCategory(String category){return productsRepo.getByCategory(category);}
+    public List<Product> getProducts(){return productsRepo.getAll();}
+    public List<Product> getAvailableProducts(){return productsRepo.getAvailable();}
 }

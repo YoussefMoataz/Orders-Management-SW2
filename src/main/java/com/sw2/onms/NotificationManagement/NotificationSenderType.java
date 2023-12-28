@@ -1,5 +1,5 @@
 package com.sw2.onms.NotificationManagement;
 
-public enum SendersType {
+public enum NotificationSenderType {
     Email,SMS
 }

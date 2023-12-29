@@ -28,6 +28,10 @@ public class OrderRepository {
         }
     }
 
+    void updateOrder(Order order){
+        orders.put(order.getOrderID(), order);
+    }
+
     void updateState(int orderID, OrderState orderState){
         Order orderComponent = orders.get(orderID);
         if (orderComponent != null){

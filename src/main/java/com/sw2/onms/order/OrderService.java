@@ -40,6 +40,7 @@ public class OrderService {
         for(Order component: orderRepository.searchOrder(orderID).getComponents()){
             component.setOrderState(OrderState.SHIPPING);
         }
+        orderRepository.updateOrder(order);
     }
 
     private void generateDummyOrders(){

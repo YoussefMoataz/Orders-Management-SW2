@@ -26,10 +26,10 @@ public class OrderService {
     public void placeOrder(Order order){
         order.setOrderState(OrderState.PLACED);
         Customer customer1 = order.getCustomer();
-        customer1.setBalance(customer1.getBalance() - shippingFees - order.getPrice());
+        customer1.setBalance(customer1.getBalance() - order.getPrice());
         for(Order component: order.getComponents()){
-            component.getCustomer().setBalance(component.getCustomer().getBalance() - shippingFees - component.getPrice());
             component.setOrderState(OrderState.PLACED);
+            component.getCustomer().setBalance(component.getCustomer().getBalance()- component.getPrice());
         }
 
         orderRepository.addOrder(order);
@@ -37,16 +37,19 @@ public class OrderService {
 
     public void shipOrder(int orderID){
         orderRepository.updateState(orderID,OrderState.SHIPPING);
-        for(Order component: orderRepository.searchOrder(orderID).getComponents()){
+        Order order = orderRepository.searchOrder(orderID);
+        order.getCustomer().setBalance(order.getCustomer().getBalance()-shippingFees);
+        for(Order component: order.getComponents()){
             component.setOrderState(OrderState.SHIPPING);
+            component.getCustomer().setBalance(component.getCustomer().getBalance()-shippingFees);
         }
         orderRepository.updateOrder(order);
     }
 
     private void generateDummyOrders(){
-        Customer customer1=new Customer("hassan","hassan@gmail.com","12345678",10000000000.25);
-        Customer customer2=new Customer("maged","maged@gmail.com","12345678",100000000000000.75);
-        Customer customer3=new Customer("youssef","youssef@gmail.com","12345678",100000000000000.5);
+        Customer customer1=new Customer("hassan","hassan@gmail.com","12345678",150.25);
+        Customer customer2=new Customer("maged","maged@gmail.com","12345678",200.75);
+        Customer customer3=new Customer("youssef","youssef@gmail.com","12345678",1000.5);
 
         Product product1 = new Product("shampoo","metro","chemicals",65.0,1);
         Product product2 = new Product("fries", "raw", "food", 12.0, 1);

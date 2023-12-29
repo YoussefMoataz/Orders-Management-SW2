@@ -17,9 +17,9 @@ public class OrderController {
     }
 
     @PostMapping (value = "/place_order")
-    public void placeOrder(@RequestBody Order order){
+    public ResponseEntity<Void> placeOrder(@RequestBody Order order){
         orderService.placeOrder(order);
-//        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping (value = "/ship/{ID}")

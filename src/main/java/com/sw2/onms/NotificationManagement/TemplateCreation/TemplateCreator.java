@@ -18,7 +18,6 @@ public class TemplateCreator {
         ArrayList<Template> orderPlacement = new ArrayList<>();
         orderPlacement.add(new Template(newTemplate));
         newTemplate = new HashMap<>();
-
         orderPlacement.add(new Template(newTemplate));
         templates.put(Operation.OrderPlacement, orderPlacement);
     }

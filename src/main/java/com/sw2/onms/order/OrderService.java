@@ -57,11 +57,11 @@ public class OrderService {
         List<Order> orderList1 = new ArrayList<>();
 
         Order o1 = new Order(productsList1,new ArrayList<>(),"dokki",customer1);
-        Order o2 = new Order(productsList1, new ArrayList<>(), "dokki, giza", customer2);
+        Order o2 = new Order(productsList1, new ArrayList<>(), "gam3a", customer2);
         orderList1.add(o1);
         orderList1.add(o2);
-        Order o3 = new Order(productsList1, orderList1, "dokki, giza", customer3);
-        orderRepository.addOrder(o3);
+        Order o3 = new Order(productsList1, orderList1, "haram", customer3);
+        placeOrder(o3);
     }
 
 }

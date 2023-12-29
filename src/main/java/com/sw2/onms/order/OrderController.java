@@ -24,7 +24,7 @@ public class OrderController {
         orderService.shipOrder(ID);
     }
 
-    @GetMapping("list_details")
+    @GetMapping("/list_details")
     public Map<Integer, Order> listDetails(){
         return orderService.listOrdersDetails();
     }

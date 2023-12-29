@@ -38,12 +38,12 @@ public class OrderService {
     public void shipOrder(int orderID){
         orderRepository.updateState(orderID,OrderState.SHIPPING);
         for(Order component: orderRepository.searchOrder(orderID).getComponents()){
-            orderRepository.updateState(component.getOrderID(), OrderState.SHIPPING);
+            component.setOrderState(OrderState.SHIPPING);
         }
     }
 
     private void generateDummyOrders(){
-        Customer customer1=new Customer("hassan","hassan@gmail.com","12345678",10.25);
+        Customer customer1=new Customer("hassan","hassan@gmail.com","12345678",10000000000.25);
         Customer customer2=new Customer("maged","maged@gmail.com","12345678",100000000000000.75);
         Customer customer3=new Customer("youssef","youssef@gmail.com","12345678",100000000000000.5);
 

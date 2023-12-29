@@ -41,7 +41,7 @@ public class Order {
     public double getPrice(){
         double price=0;
         for(Product product:products){
-            price+=product.getPrice();
+            price+=product.getPrice()* product.getCount();
         }
         return price;
     }

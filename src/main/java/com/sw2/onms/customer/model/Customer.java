@@ -12,6 +12,9 @@ public class Customer {
     private Language preferredLanguage;
     private NotificationSenderType preferredNotificationChannel;
 
+    public Customer() {
+    }
+
     public Customer(String name, String email, String password, Double balance, String mobileNumber) {
         this.name = name;
         this.email = email;

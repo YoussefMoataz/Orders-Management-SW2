@@ -25,7 +25,7 @@ public class OrderController {
     }
 
     @GetMapping("/list_details")
-    public Map<Integer, Order> listDetails(){
-        return orderService.listOrdersDetails();
+    public ResponseEntity<Map<Integer, Order>> listDetails(){
+        return new ResponseEntity<>(orderService.listOrdersDetails(), HttpStatus.OK);
     }
 }

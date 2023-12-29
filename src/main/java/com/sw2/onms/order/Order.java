@@ -2,6 +2,8 @@ package com.sw2.onms.order;
 
 import com.sw2.onms.customer.model.Customer;
 import com.sw2.onms.product.model.Product;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
@@ -12,6 +14,10 @@ public class Order {
     private String address;
     private Customer customer;
     private OrderState orderState;
+
+    public Order(){
+        components = new ArrayList<>();
+    }
 
     public Order(List<Product> products, List<Order> components, String address, Customer customer){
         this.products = products;
@@ -78,5 +84,17 @@ public class Order {
 
     public List<Product> getProducts() {
         return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    public void setComponents(List<Order> components) {
+        this.components = components;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

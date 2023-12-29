@@ -9,24 +9,8 @@ public class CompoundOrder extends OrderComponent{
     private List<OrderComponent> components;
 
     @Override
-    public void listDetails() {
-        // todo
-    }
-
-    @Override
-    public void addProduct(Product product) {
-        // todo
-    }
-
-    @Override
-    public void removeProduct(Product product) {
-        // todo
-    }
-
-    @Override
-    public double getPrice() {
-        // todo
-        return 0;
+    public OrderComponent listDetails() {
+        return this;
     }
 
     public void addComponent(OrderComponent component){

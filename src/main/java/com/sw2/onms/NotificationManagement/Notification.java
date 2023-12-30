@@ -15,14 +15,14 @@ public class Notification {
     public String getMessage() {
         return message;
     }
-    public String getSenderType() {
+    public NotificationSenderType getSenderType() {
         return senderType;
     }
     public void setContactAddress(String contactAddress) {
         this.contactAddress = contactAddress;
     }
 
-    public void setSenderType(String senderType) {
+    public void setSenderType(NotificationSenderType senderType) {
         this.senderType = senderType;
     }
 

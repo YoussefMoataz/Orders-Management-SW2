@@ -1,9 +1,11 @@
 package com.sw2.onms.order;
 
 import com.sw2.onms.NotificationManagement.NotificationSenderType;
+import com.sw2.onms.NotificationManagement.Operation;
 import com.sw2.onms.NotificationManagement.TemplateCreation.Language;
 import com.sw2.onms.customer.model.Customer;
 import com.sw2.onms.product.model.Product;
+import com.sw2.onms.NotificationManagement.NotificationManager;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ import java.util.Map;
 public class OrderService {
 
     private OrderRepository orderRepository;
+    private NotificationManager notificationManager = new NotificationManager();
     private int shippingFees = 50;
 
     public OrderService() {
@@ -33,7 +36,7 @@ public class OrderService {
             component.setOrderState(OrderState.PLACED);
             component.getCustomer().setBalance(component.getCustomer().getBalance()- component.getPrice());
         }
-
+        notificationManager.sendNotification(Operation.OrderPlacement,order);
         orderRepository.addOrder(order);
     }
 
@@ -51,7 +54,7 @@ public class OrderService {
     private void generateDummyOrders(){
         Customer customer1=new Customer("hassan","hassan@gmail.com","12345678",150.25, "01011993990", NotificationSenderType.SMS);
         Customer customer2=new Customer("maged","maged@gmail.com","12345678",200.75,"01111111111");
-        Customer customer3=new Customer("youssef","youssef@gmail.com","12345678",1000.5, "01033148446", Language.Arabic);
+        Customer customer3=new Customer("youssef","youssef@gmail.com","12345678",1000.5, "01033148446", Language.English);
 
         Product product1 = new Product("shampoo","metro","chemicals",65.0,1);
         Product product2 = new Product("fries", "raw", "food", 12.0, 1);

@@ -18,9 +18,10 @@ public class NotificationManager {
         if(order != null){
             reqGetPLaceholders(order);
             for (Map.Entry<String, Customer> entry : orderCustomers.entrySet()) {
-                String messageToSend = templateCreator.createTemplate(operation,CustomerPlaceholders.get(entry.getKey()),entry.getValue().getPreferredLanguage());
-                Notification newNotification = new Notification(messageToSend,entry.getValue().getPreferredNotificationChannel(),entry.getKey());
+                String messageToBeSent = templateCreator.createTemplate(operation,CustomerPlaceholders.get(entry.getKey()),entry.getValue().getPreferredLanguage());
+                Notification newNotification = new Notification(messageToBeSent,entry.getValue().getPreferredNotificationChannel(),entry.getKey());
                 notificationQueue.add(newNotification);
+                System.out.println(messageToBeSent);
             }
             return "Notification has been sent successfully";
         }

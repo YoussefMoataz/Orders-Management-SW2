@@ -22,7 +22,7 @@ public class OrderService {
     private int shippingFees = 50;
 
     public OrderService() {
-        this.orderRepository = new OrderRepository();
+        this.orderRepository = OrderRepository.getInstance();
         generateDummyOrders();
     }
 
@@ -38,8 +38,8 @@ public class OrderService {
             component.setOrderState(OrderState.PLACED);
             component.getCustomer().setBalance(component.getCustomer().getBalance()- component.getPrice());
         }
-        notificationManager.sendNotification(Operation.OrderPlacement,order);
         orderRepository.addOrder(order);
+        notificationManager.sendNotification(Operation.OrderPlacement,order);
     }
 
     public void shipOrder(int orderID){
@@ -51,6 +51,7 @@ public class OrderService {
             component.getCustomer().setBalance(component.getCustomer().getBalance()-shippingFees);
         }
         orderRepository.updateOrder(order);
+        notificationManager.sendNotification(Operation.OrderShipment,order);
     }
 
     private void generateDummyOrders(){

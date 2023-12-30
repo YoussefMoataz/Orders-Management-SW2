@@ -6,9 +6,11 @@ import com.sw2.onms.NotificationManagement.TemplateCreation.Placeholder;
 import com.sw2.onms.NotificationManagement.TemplateCreation.TemplateCreator;
 import com.sw2.onms.customer.model.Customer;
 import com.sw2.onms.order.Order;
+import com.sw2.onms.order.OrderRepository;
 import com.sw2.onms.product.model.Product;
 
 public class NotificationManager {
+    private OrderRepository orderRepository = OrderRepository.getInstance();
     private Queue<Notification> notificationQueue = new LinkedList<>() ;
     private  Map<String,Map<Placeholder, String>> CustomerPlaceholders = new HashMap<>();
     private  Map<String, Customer> orderCustomers = new HashMap<>();
@@ -35,14 +37,13 @@ public class NotificationManager {
             //order.getCustomer() != null &&
             if(CustomerPlaceholders.containsKey(curOrder.getCustomer().getEmail())){
                 Map<Placeholder, String> placeholders = CustomerPlaceholders.get(curOrder.getCustomer().getEmail());
-                int orderPrice = Integer.parseInt(placeholders.get(Placeholder.OrderPrice));
+                Double orderPrice = Double.parseDouble(placeholders.get(Placeholder.OrderPrice));
                 orderPrice += curOrder.getPrice();
                 placeholders.put(Placeholder.OrderPrice,String.valueOf(orderPrice));
-                List<Product> products = curOrder.getProducts();
+                List<String> products = curOrder.getProductsNames();
                 String productsName = placeholders.get(Placeholder.Products);
-                for(Product product:products){
-                    if(!productsName.contains(product.getName()))
-                        productsName = productsName + ", " + (product.getName());
+                for(String product:products){
+                    productsName += ", " + product;
                 }
                 placeholders.put(Placeholder.Products, productsName);
 
@@ -53,11 +54,10 @@ public class NotificationManager {
                 placeholders.put(Placeholder.OrderID, String.valueOf(curOrder.getOrderID()));
                 placeholders.put(Placeholder.OrderPrice, String.valueOf(curOrder.getPrice()));
 
-                List<Product> products = curOrder.getProducts();
+                List<String> products = curOrder.getProductsNames();
                 String productsName = "";
-                for(Product product:products){
-                    if(!productsName.contains(product.getName()))
-                        productsName = productsName + ", " + (product.getName());
+                for(String product:products){
+                    productsName +=  ", " + product;
                 }
                 if(productsName.length() > 0) {
                     productsName = productsName.substring(2, productsName.length());

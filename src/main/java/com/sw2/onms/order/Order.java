@@ -82,8 +82,24 @@ public class Order {
         return orderState;
     }
 
-    public List<Product> getProducts() {
+    private List<Product> getProducts() {
         return products;
+    }
+
+    public List<String> getProductsNames(){
+        List<String> productNames = new ArrayList<>();
+        for (Product p : products) {
+            productNames.add(p.getName());
+        }
+        return productNames;
+    }
+
+    public List<Long> getProductsID(){
+        List<Long> productIDs = new ArrayList<>();
+        for (Product p: products) {
+            productIDs.add(p.getSerialNumber());
+        }
+        return productIDs;
     }
 
     public void setProducts(List<Product> products) {

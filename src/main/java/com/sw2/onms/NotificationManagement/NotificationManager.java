@@ -65,7 +65,9 @@ public class NotificationManager {
                 placeholders.put(Placeholder.Products, productsName);
                 CustomerPlaceholders.put(curOrder.getCustomer().getEmail(),placeholders);
             }
-
+            for(Order order : curOrder.getComponents() ){
+                reqGetPLaceholders(order);
+            }
         }
     }
 

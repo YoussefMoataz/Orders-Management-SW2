@@ -25,7 +25,7 @@ public class TemplateDB {
         Template ordShipmentTemplate2 = new Template(Language.English, "Hi {" + Placeholder.CustomerName.name() + "}! we're delighted to inform you that your order {" + Placeholder.OrderID + "} has been shipped successfully. The total price is {" + Placeholder.OrderPrice + "}. Your purchase is on its way, and we look forward to welcoming you to our store :)");
         ordShipmentTemplate2.addNewTemplateLanguage(Language.French,"Salut {" + Placeholder.CustomerName.name() + "} ! Nous sommes ravis de vous informer que votre commande {" + Placeholder.OrderID + "} a été expédiée avec succès. Le prix total est de {" + Placeholder.OrderPrice + "}. Votre achat est en chemin, et nous avons hâte de vous accueillir dans notre magasin :)");
         List<Template> orderShipment = new ArrayList<>();
-        orderPlacement.add(ordShipmentTemplate1);  orderPlacement.add(ordShipmentTemplate2);
+        orderShipment.add(ordShipmentTemplate1);  orderShipment.add(ordShipmentTemplate2);
         templates.put(Operation.OrderShipment,orderShipment);
 
     }

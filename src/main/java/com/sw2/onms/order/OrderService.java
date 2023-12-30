@@ -51,6 +51,7 @@ public class OrderService {
             component.getCustomer().setBalance(component.getCustomer().getBalance()-shippingFees);
         }
         orderRepository.updateOrder(order);
+        notificationManager.sendNotification(Operation.OrderShipment,order);
     }
 
     private void generateDummyOrders(){

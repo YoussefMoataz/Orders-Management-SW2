@@ -37,7 +37,7 @@ public class NotificationManager {
             //order.getCustomer() != null &&
             if(CustomerPlaceholders.containsKey(curOrder.getCustomer().getEmail())){
                 Map<Placeholder, String> placeholders = CustomerPlaceholders.get(curOrder.getCustomer().getEmail());
-                int orderPrice = Integer.parseInt(placeholders.get(Placeholder.OrderPrice));
+                Double orderPrice = Double.parseDouble(placeholders.get(Placeholder.OrderPrice));
                 orderPrice += curOrder.getPrice();
                 placeholders.put(Placeholder.OrderPrice,String.valueOf(orderPrice));
                 List<String> products = curOrder.getProductsNames();

@@ -38,8 +38,8 @@ public class OrderService {
             component.setOrderState(OrderState.PLACED);
             component.getCustomer().setBalance(component.getCustomer().getBalance()- component.getPrice());
         }
-        notificationManager.sendNotification(Operation.OrderPlacement,order);
         orderRepository.addOrder(order);
+        notificationManager.sendNotification(Operation.OrderPlacement,order);
     }
 
     public void shipOrder(int orderID){

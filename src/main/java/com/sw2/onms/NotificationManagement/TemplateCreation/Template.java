@@ -1,14 +1,22 @@
 package com.sw2.onms.NotificationManagement.TemplateCreation;
 
+import com.sw2.onms.NotificationManagement.Operation;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Template {
     Map<Language,String> contents;
+    Operation corespondingOperation;
     Template(Map<Language,String> contents){
         this.contents = contents;
     }
-    public String setPlaceholders(Map<Placeholder, List<String>> placeholders, Language language){
+    Template(Language language, String newContent){
+        contents = new HashMap<>();
+        contents.put(language,newContent);
+    }
+    public String setPlaceholders(Map<Placeholder, String> placeholders, Language language){
         if(contents.containsKey(language)){
             String message = contents.get(language),content = message;
             boolean flag = true;
@@ -21,10 +29,8 @@ public class Template {
                     }
                     Placeholder placeholderKey = Placeholder.found(key);
                     if (placeholderKey != null && placeholders.containsKey(placeholderKey)) {
-                        String val =  placeholders.get(placeholderKey).get(0);
-                        for(int k = 1; k < placeholders.get(placeholderKey).size();k++)
-                            val += ", " + placeholders.get(placeholderKey).get(k);
-                        if(placeholders.get(placeholderKey).size() > 1)
+                        String val =  placeholders.get(placeholderKey);
+                        if(placeholders.get(placeholderKey).contains(","))
                             val = "{" + val + "}";
                         message = message.replace("{" + key + "}", val);
                     }//this mean that there will be a variable in the content does not have a value as this

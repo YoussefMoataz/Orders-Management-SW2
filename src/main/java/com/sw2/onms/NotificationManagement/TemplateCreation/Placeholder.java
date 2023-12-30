@@ -1,7 +1,7 @@
 package com.sw2.onms.NotificationManagement.TemplateCreation;
 
 public enum Placeholder {
-    Customer,OrderName,OrderPrice,DetailedOrderContent,Products;
+    CustomerName,OrderID,OrderPrice,DetailedOrderContent,Products;
     public static Placeholder found(String val) {
         for (Placeholder p : Placeholder.values()) {
             if (p.name().equals(val)) {

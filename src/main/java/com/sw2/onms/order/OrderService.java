@@ -22,7 +22,7 @@ public class OrderService {
     private int shippingFees = 50;
 
     public OrderService() {
-        this.orderRepository = new OrderRepository();
+        this.orderRepository = OrderRepository.getInstance();
         generateDummyOrders();
     }
 

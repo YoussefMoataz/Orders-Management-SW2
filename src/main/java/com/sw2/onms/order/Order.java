@@ -86,6 +86,14 @@ public class Order {
         return products;
     }
 
+    public List<String> getProductsNames(){
+        List<String> productNames = new ArrayList<>();
+        for (Product p : products) {
+            productNames.add(p.getName());
+        }
+        return productNames;
+    }
+
     public List<Long> getProductsID(){
         List<Long> productIDs = new ArrayList<>();
         for (Product p: products) {

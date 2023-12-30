@@ -11,7 +11,7 @@ import java.util.List;
 public class ProductsRepo {
     private final HashMap<Long, Product> products;
 
-    ProductsRepo(){
+    public ProductsRepo(){
         products = new HashMap<>();
 
         // dummy products for testing purpose

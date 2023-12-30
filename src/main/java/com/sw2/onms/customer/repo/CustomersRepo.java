@@ -13,7 +13,7 @@ import java.util.List;
 public class CustomersRepo {
     private final HashMap<String, Customer> customers;
 
-    CustomersRepo(){
+    public CustomersRepo(){
         customers = new HashMap<>();
 
         // dummy customers for testing purpose

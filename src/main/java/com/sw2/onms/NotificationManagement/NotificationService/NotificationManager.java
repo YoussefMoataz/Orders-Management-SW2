@@ -26,6 +26,8 @@ public class NotificationManager {
     }
     public  String sendNotification(Operation operation, Order order){
         if(order != null){
+            orderCustomers.clear();
+            CustomerPlaceholders.clear();
             reqGetPLaceholders(order);
             String notificationsMessage = "";
             for (Map.Entry<String, Customer> entry : orderCustomers.entrySet()) {
@@ -34,7 +36,6 @@ public class NotificationManager {
                 notificationQueue.add(newNotification);
                 notificationsMessage += newNotification.getMessage().getContentWithActualVal() +" Via: " + newNotification.getSenderType()+"\n";
             }
-            orderCustomers = new HashMap<>();
             while (!notificationQueue.isEmpty()){
                 SendNotificationFromQueue();
                 /*try {

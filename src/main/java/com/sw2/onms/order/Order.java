@@ -94,12 +94,12 @@ public class Order {
         return productNames;
     }
 
-    public List<Long> getProductsID(){
-        List<Long> productIDs = new ArrayList<>();
+    public List<Long> getProductsSerialNumbers(){
+        List<Long> productsSerialNumbers = new ArrayList<>();
         for (Product p: products) {
-            productIDs.add(p.getSerialNumber());
+            productsSerialNumbers.add(p.getSerialNumber());
         }
-        return productIDs;
+        return productsSerialNumbers;
     }
 
     public void setProducts(List<Product> products) {

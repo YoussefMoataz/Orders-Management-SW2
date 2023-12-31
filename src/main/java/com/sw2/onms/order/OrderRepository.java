@@ -36,10 +36,10 @@ public class OrderRepository {
      */
     int addOrder(Order order){
         order.setOrderID(orderID);
-        orders.put(orderID,order);
         for (Order o: order.getComponents()) {
             o.setOrderID(orderID);
         }
+        orders.put(orderID,order);
         orderID++;
         return order.getOrderID();
     }

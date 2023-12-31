@@ -28,7 +28,9 @@ public class OrderService {
     private NotificationManager notificationManager=new NotificationManager();
     private int shippingFees = 50;
 
+//    public OrderService(NotificationManager notificationManager) {
     public OrderService() {
+//        this.notificationManager=notificationManager;
         this.orderRepository = OrderRepository.getInstance();
         this.productsRepo = new ProductsRepo();
         generateDummyOrders();
@@ -45,6 +47,11 @@ public class OrderService {
             order.setProducts(order.getProductsCount());
         }
         customer1.setBalance(customer1.getBalance() - order.getPrice());
+        for(long productSerial:order.getProductsSerialNumbers()){
+            Product product = productsRepo.getBySerialNumber(productSerial);
+            product.setCount(product.getCount()-order.getCount(productSerial));
+            productsRepo.update(productSerial,product);
+        }
         for(Order component: order.getComponents()){
             component.setOrderState(OrderState.PLACED);
             if(component.getProductsCount() != null) {

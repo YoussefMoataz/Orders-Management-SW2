@@ -76,6 +76,7 @@ public class OrderService {
     public void shipOrder(int orderID){
         orderRepository.updateState(orderID,OrderState.SHIPPING);
         Order order = orderRepository.searchOrder(orderID);
+        order.setShippingTime(Time.valueOf(LocalTime.now()).getTime());
         order.getCustomer().setBalance(order.getCustomer().getBalance() - shippingFees);
         for(Order component: order.getComponents()){
             component.setOrderState(OrderState.SHIPPING);

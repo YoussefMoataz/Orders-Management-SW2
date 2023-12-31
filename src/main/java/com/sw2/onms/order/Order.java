@@ -1,5 +1,6 @@
 package com.sw2.onms.order;
 
+import com.sw2.onms.NotificationManagement.NotificationService.NotificationService;
 import com.sw2.onms.customer.model.Customer;
 import com.sw2.onms.product.model.Product;
 import com.sw2.onms.product.repo.ProductsRepo;
@@ -81,7 +82,7 @@ public class Order {
     }
 
     /**
-     * Used in {@link com.sw2.onms.NotificationManagement.NotificationService.NotificationManager}
+     * Used in {@link NotificationService}
      * @return List of product names
      */
     public List<String> getProductsNames(){

@@ -1,12 +1,10 @@
 package com.sw2.onms.order;
 
-import com.sw2.onms.NotificationManagement.NotificationService.NotificationSenderType;
 import com.sw2.onms.NotificationManagement.NotificationService.Operation;
-import com.sw2.onms.NotificationManagement.NotificationService.TemplateCreation.Language;
 import com.sw2.onms.customer.model.Customer;
 import com.sw2.onms.customer.repo.CustomersRepo;
 import com.sw2.onms.product.model.Product;
-import com.sw2.onms.NotificationManagement.NotificationService.NotificationManager;
+import com.sw2.onms.NotificationManagement.NotificationService.NotificationService;
 import com.sw2.onms.product.repo.ProductsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,12 +24,12 @@ public class OrderService {
 
     @Autowired
     private ProductsRepo productsRepo;
-    private NotificationManager notificationManager;
+    private NotificationService notificationManager;
     private CustomersRepo customersRepo;
     private int shippingFees = 50;
     private Long validTime = 30000l;
 
-    public OrderService(NotificationManager notificationManager, CustomersRepo customersRepo) {
+    public OrderService(NotificationService notificationManager, CustomersRepo customersRepo) {
         this.notificationManager=notificationManager;
         this.customersRepo = customersRepo;
         this.orderRepository = OrderRepository.getInstance();

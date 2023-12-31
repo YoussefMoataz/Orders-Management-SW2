@@ -10,7 +10,7 @@ import com.sw2.onms.order.Order;
 import org.springframework.stereotype.Service;
 
 @Service
-public class NotificationManager {
+public class NotificationService {
     private Queue<Notification> notificationQueue = new LinkedList<>() ;
     private  Map<String,Map<Placeholder, String>> CustomerPlaceholders = new HashMap<>();
     private  Map<String, Customer> orderCustomers = new HashMap<>();
@@ -19,7 +19,7 @@ public class NotificationManager {
     private TemplateCreator templateCreator = new TemplateCreator();
     private preferredContactAddressCreator contactAddressCreator = new preferredContactAddressCreator();
     private Map<NotificationSenderType,Class<? extends NotificationSender>>senders;
-    public NotificationManager(){
+    public NotificationService(){
         senders = new HashMap<>();
         senders.put(NotificationSenderType.Email, EmailSender.class);
         senders.put(NotificationSenderType.SMS, SMSSender.class);
@@ -109,7 +109,9 @@ public class NotificationManager {
             if(CustomerPlaceholders.containsKey(curOrder.getCustomer().getEmail())){
                 Map<Placeholder, String> placeholders = CustomerPlaceholders.get(curOrder.getCustomer().getEmail());
                 Double orderPrice = Double.parseDouble(placeholders.get(Placeholder.OrderPrice));
-                orderPrice += curOrder.getPrice();
+                if(curOrder.getPrice() != 0.0){
+                    orderPrice += curOrder.getPrice();
+                }
                 placeholders.put(Placeholder.OrderPrice,String.valueOf(orderPrice));
                 List<String> products = curOrder.getProductsNames();
                 String productsName = placeholders.get(Placeholder.Products);

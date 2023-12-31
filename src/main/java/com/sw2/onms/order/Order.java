@@ -2,17 +2,34 @@ package com.sw2.onms.order;
 
 import com.sw2.onms.customer.model.Customer;
 import com.sw2.onms.product.model.Product;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@Setter
 public class Order {
 
+    @Getter
+    @Setter
     private int orderID;
+    @Getter(AccessLevel.NONE)
+    @Setter
     private List<Product> products;
+    @Getter
+    @Setter
     private List<Order> components;
+    @Getter
+    @Setter
     private String address;
+    @Getter
+    @Setter
     private Customer customer;
+    @Getter
+    @Setter
     private OrderState orderState;
 
     public Order(){
@@ -50,42 +67,6 @@ public class Order {
         components.add(component);
     }
 
-    public List<Order> getComponents() {
-        return components;
-    }
-
-    public void setOrderID(int orderID) {
-        this.orderID = orderID;
-    }
-
-    public int getOrderID(){
-        return orderID;
-    }
-
-    public void setOrderState(OrderState state){
-        this.orderState = state;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public OrderState getOrderState() {
-        return orderState;
-    }
-
-    private List<Product> getProducts() {
-        return products;
-    }
-
     public List<String> getProductsNames(){
         List<String> productNames = new ArrayList<>();
         for (Product p : products) {
@@ -102,15 +83,4 @@ public class Order {
         return productsSerialNumbers;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
-
-    public void setComponents(List<Order> components) {
-        this.components = components;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 }

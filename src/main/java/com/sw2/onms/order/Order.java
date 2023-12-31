@@ -24,10 +24,8 @@ public class Order {
     @Setter
     private int orderID;
     @Getter(AccessLevel.PRIVATE)
-//    @Setter
     private List<Product> products;
     @Getter(AccessLevel.PUBLIC)
-//    @Setter
     private Map<Long, Integer> productsCount;
     @Getter
     @Setter
@@ -41,6 +39,9 @@ public class Order {
     @Getter
     @Setter
     private OrderState orderState;
+    @Getter
+    @Setter
+    private Long shippingTime;
 
     public Order(){
         components = new ArrayList<>();
@@ -80,7 +81,7 @@ public class Order {
     }
 
     /**
-     * Used in {@link com.sw2.onms.NotificationManagement.NotificationManager}
+     * Used in {@link com.sw2.onms.NotificationManagement.NotificationService.NotificationManager}
      * @return List of product names
      */
     public List<String> getProductsNames(){

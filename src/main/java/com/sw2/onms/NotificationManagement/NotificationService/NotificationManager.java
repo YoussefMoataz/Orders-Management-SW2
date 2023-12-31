@@ -67,7 +67,6 @@ public class NotificationManager {
         String sortedContactAddresses = "";
         // Iterate over the sorted Templates according to its frequency
         for (Map.Entry<String, Integer> entry : entryList) {
-            System.out.println(entry.getKey() +"    "+entry.getValue());
             sortedContactAddresses += "Contact Address: " + entry.getKey() + "\n, Frequency: " + entry.getValue()+"\n";
         }
         System.out.println(sortedContactAddresses);

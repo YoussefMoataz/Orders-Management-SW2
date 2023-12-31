@@ -3,9 +3,9 @@ package com.sw2.onms.NotificationManagement;
 import com.sw2.onms.NotificationManagement.TemplateCreation.Template;
 
 public class Notification {
-    Template message;
-    NotificationSenderType senderType;
-    String contactAddress;
+    private Template message;
+    private NotificationSenderType senderType;
+    private String contactAddress;
     public Notification(Template message, NotificationSenderType senderType, String contactAddress){
         this.message = message;
         this.senderType = senderType;

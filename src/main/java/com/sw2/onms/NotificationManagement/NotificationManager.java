@@ -28,8 +28,8 @@ public class NotificationManager {
                 Template messageToBeSent = templateCreator.createTemplate(operation,CustomerPlaceholders.get(entry.getKey()),entry.getValue().getPreferredLanguage());
                 Notification newNotification = new Notification(messageToBeSent,entry.getValue().getPreferredNotificationChannel(),entry.getKey());
                 notificationQueue.add(newNotification);
-                System.out.println(newNotification.message.getLatestSentTemplate());
-                System.out.println(newNotification.message.getContentWithActualVal());
+                //System.out.println(newNotification.getMessage().getLatestSentTemplate());
+                System.out.println(newNotification.getMessage().getContentWithActualVal());
             }
             return "Notification has been sent successfully";
         }
@@ -47,23 +47,23 @@ public class NotificationManager {
     }
     private void SendNotificationFromQueue(){
         Notification notificationToBeSent = notificationQueue.poll();
-        if(senders.containsKey(notificationToBeSent.senderType)) {
+        if(senders.containsKey(notificationToBeSent.getSenderType())) {
             try{
-                NotificationSender sender = senders.get(notificationToBeSent.senderType).newInstance();
+                NotificationSender sender = senders.get(notificationToBeSent.getSenderType()).newInstance();
                 //If method send returns a message contains Incorrect word this is means that contact address is incorrect
-                if(!sender.send(notificationToBeSent.message.getContentWithActualVal(),notificationToBeSent.contactAddress).contains("Incorrect")){
+                if(!sender.send(notificationToBeSent.getMessage().getContentWithActualVal(),notificationToBeSent.getContactAddress()).contains("Incorrect")){
                     int counter = 1;
-                    if(mostSentTemplates.containsKey(notificationToBeSent.message.getLatestSentTemplate())){
-                        counter = mostSentTemplates.get(notificationToBeSent.message.getLatestSentTemplate()) + 1;
-                        mostSentTemplates.put(notificationToBeSent.message.getLatestSentTemplate(), counter);
+                    if(mostSentTemplates.containsKey(notificationToBeSent.getMessage().getLatestSentTemplate())){
+                        counter = mostSentTemplates.get(notificationToBeSent.getMessage().getLatestSentTemplate()) + 1;
+                        mostSentTemplates.put(notificationToBeSent.getMessage().getLatestSentTemplate(), counter);
                     }else{
-                        mostSentTemplates.put(notificationToBeSent.message.getLatestSentTemplate(), 1);
+                        mostSentTemplates.put(notificationToBeSent.getMessage().getLatestSentTemplate(), 1);
                     }
-                    if(mostNotifiedContactAddresses.containsKey(notificationToBeSent.contactAddress)){
-                        counter = mostNotifiedContactAddresses.get(notificationToBeSent.contactAddress) + 1;
-                        mostNotifiedContactAddresses.put(notificationToBeSent.contactAddress, counter);
+                    if(mostNotifiedContactAddresses.containsKey(notificationToBeSent.getContactAddress())){
+                        counter = mostNotifiedContactAddresses.get(notificationToBeSent.getContactAddress()) + 1;
+                        mostNotifiedContactAddresses.put(notificationToBeSent.getContactAddress(), counter);
                     }else
-                        mostNotifiedContactAddresses.put(notificationToBeSent.contactAddress, 1);
+                        mostNotifiedContactAddresses.put(notificationToBeSent.getContactAddress(), 1);
 
                 }
             } catch (InstantiationException | IllegalAccessException e) {

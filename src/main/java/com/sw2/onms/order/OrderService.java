@@ -26,12 +26,11 @@ public class OrderService {
 
     @Autowired
     private ProductsRepo productsRepo;
-    private NotificationManager notificationManager=new NotificationManager();
+    private NotificationManager notificationManager;
     private int shippingFees = 50;
 
-//    public OrderService(NotificationManager notificationManager) {
-    public OrderService() {
-//        this.notificationManager=notificationManager;
+    public OrderService(NotificationManager notificationManager) {
+        this.notificationManager=notificationManager;
         this.orderRepository = OrderRepository.getInstance();
         this.productsRepo = new ProductsRepo();
         generateDummyOrders();

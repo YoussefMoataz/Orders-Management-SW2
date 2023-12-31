@@ -8,6 +8,7 @@ import com.sw2.onms.customer.repo.CustomersRepo;
 import com.sw2.onms.product.model.Product;
 import com.sw2.onms.NotificationManagement.NotificationService.NotificationManager;
 import com.sw2.onms.product.repo.ProductsRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,13 +23,17 @@ import java.util.Map;
 public class OrderService {
 
     private OrderRepository orderRepository;
-    private NotificationManager notificationManager;
-    //private NotificationManager notificationManager = new NotificationManager();
+
+    @Autowired
+    private ProductsRepo productsRepo;
+    private NotificationManager notificationManager=new NotificationManager();
     private int shippingFees = 50;
 
-    public OrderService(NotificationManager notificationService){
-        this.notificationManager = notificationService;
+//    public OrderService(NotificationManager notificationManager) {
+    public OrderService() {
+//        this.notificationManager=notificationManager;
         this.orderRepository = OrderRepository.getInstance();
+        this.productsRepo = new ProductsRepo();
         generateDummyOrders();
     }
 
@@ -39,10 +44,26 @@ public class OrderService {
     public void placeOrder(Order order){
         order.setOrderState(OrderState.PLACED);
         Customer customer1 = order.getCustomer();
+        if(order.getProductsCount() != null) {
+            order.setProducts(order.getProductsCount());
+        }
         customer1.setBalance(customer1.getBalance() - order.getPrice());
+        for(long productSerial:order.getProductsSerialNumbers()){
+            Product product = productsRepo.getBySerialNumber(productSerial);
+            product.setCount(product.getCount()-order.getCount(productSerial));
+            productsRepo.update(productSerial,product);
+        }
         for(Order component: order.getComponents()){
             component.setOrderState(OrderState.PLACED);
-            component.getCustomer().setBalance(component.getCustomer().getBalance()- component.getPrice());
+            if(component.getProductsCount() != null) {
+                component.setProducts(component.getProductsCount());
+            }
+            component.getCustomer().setBalance(component.getCustomer().getBalance() - component.getPrice());
+            for(long productSerial:component.getProductsSerialNumbers()){
+                Product product = productsRepo.getBySerialNumber(productSerial);
+                product.setCount(product.getCount()-component.getCount(productSerial));
+                productsRepo.update(productSerial,product);
+            }
         }
         orderRepository.addOrder(order);
         notificationManager.sendNotification(Operation.OrderPlacement,order);
@@ -51,10 +72,10 @@ public class OrderService {
     public void shipOrder(int orderID){
         orderRepository.updateState(orderID,OrderState.SHIPPING);
         Order order = orderRepository.searchOrder(orderID);
-        order.getCustomer().setBalance(order.getCustomer().getBalance()-shippingFees);
+        order.getCustomer().setBalance(order.getCustomer().getBalance() - shippingFees);
         for(Order component: order.getComponents()){
             component.setOrderState(OrderState.SHIPPING);
-            component.getCustomer().setBalance(component.getCustomer().getBalance()-shippingFees);
+            component.getCustomer().setBalance(component.getCustomer().getBalance() - shippingFees);
         }
         orderRepository.updateOrder(order);
         notificationManager.sendNotification(Operation.OrderShipment,order);

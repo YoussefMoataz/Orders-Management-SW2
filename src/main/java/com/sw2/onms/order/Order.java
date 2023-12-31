@@ -44,13 +44,13 @@ public class Order {
     @Setter
     private Long shippingTime;
 
-    public Order(){
+    public Order() {
         components = new ArrayList<>();
         products = new ArrayList<>();
         productsCount = new HashMap<>();
     }
 
-    public Order(List<Product> products, List<Order> components, String address, Customer customer){
+    public Order(List<Product> products, List<Order> components, String address, Customer customer) {
         this.products = products;
         this.components = components;
         this.address = address;
@@ -61,31 +61,32 @@ public class Order {
         return this;
     }
 
-    public void addProduct(Product product){
+    public void addProduct(Product product) {
         products.add(product);
     }
 
-    public void removeProduct(Product product){
+    public void removeProduct(Product product) {
         products.remove(product);
     }
 
-    public double getPrice(){
-        double price=0;
-        for(Product product:products){
-            price+=product.getPrice()* product.getCount();
+    public double getPrice() {
+        double price = 0;
+        for (Product product : products) {
+            price += product.getPrice() * product.getCount();
         }
         return price;
     }
 
-    public void addComponent(Order component){
+    public void addComponent(Order component) {
         components.add(component);
     }
 
     /**
      * Used in {@link NotificationService}
+     *
      * @return List of product names
      */
-    public List<String> getProductsNames(){
+    public List<String> getProductsNames() {
         List<String> productNames = new ArrayList<>();
         for (Product p : products) {
             productNames.add(p.getName());
@@ -93,16 +94,16 @@ public class Order {
         return productNames;
     }
 
-    public List<Long> getProductsSerialNumbers(){
+    public List<Long> getProductsSerialNumbers() {
         List<Long> productsSerialNumbers = new ArrayList<>();
-        for (Product p: products) {
+        for (Product p : products) {
             productsSerialNumbers.add(p.getSerialNumber());
         }
         return productsSerialNumbers;
     }
 
-    public Integer getCount(Long serial){
-        for (Product p: products) {
+    public Integer getCount(Long serial) {
+        for (Product p : products) {
             if (p != null) {
                 if (p.getSerialNumber() == serial) {
                     return p.getCount();
@@ -112,10 +113,10 @@ public class Order {
         return 0;
     }
 
-    public void setProducts(Map<Long, Integer> productsCount){
+    public void setProducts(Map<Long, Integer> productsCount) {
         ProductsRepo productsRepo = new ProductsRepo();
         List<Product> productsList = new ArrayList<>();
-        for(Map.Entry<Long, Integer> pair: productsCount.entrySet()){
+        for (Map.Entry<Long, Integer> pair : productsCount.entrySet()) {
             Product product = productsRepo.getBySerialNumber(pair.getKey());
             product.setCount(pair.getValue());
             productsList.add(product);

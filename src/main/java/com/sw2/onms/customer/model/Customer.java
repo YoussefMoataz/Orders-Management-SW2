@@ -40,6 +40,7 @@ public class Customer {
         this.preferredLanguage = preferredLanguage;
         this.preferredNotificationChannel = preferredNotificationChannel;
     }
+
     public Customer(String name,
                     String email,
                     String password,
@@ -54,6 +55,7 @@ public class Customer {
         this.preferredLanguage = preferredLanguage;
         this.preferredNotificationChannel = NotificationSenderType.Email;
     }
+
     public Customer(String name,
                     String email,
                     String password,

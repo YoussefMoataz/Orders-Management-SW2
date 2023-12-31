@@ -11,18 +11,33 @@ import java.util.List;
 @RequestMapping("/customer")
 public class CustomerController {
     CustomersService customersService;
-    CustomerController(CustomersRepo customersRepo){
+
+    CustomerController(CustomersRepo customersRepo) {
         this.customersService = new CustomersService(customersRepo);
     }
 
     @PostMapping("/add")
-    public Customer addCustomer(@RequestBody Customer customer){return customersService.addCustomer(customer);}
+    public Customer addCustomer(@RequestBody Customer customer) {
+        return customersService.addCustomer(customer);
+    }
+
     @GetMapping("/get/{email}")
-    public Customer getCustomer(@PathVariable String email){return customersService.getCustomer(email);}
+    public Customer getCustomer(@PathVariable String email) {
+        return customersService.getCustomer(email);
+    }
+
     @GetMapping("/get/all")
-    public List<Customer> getCustomers(){return customersService.getCustomers();}
+    public List<Customer> getCustomers() {
+        return customersService.getCustomers();
+    }
+
     @PutMapping("/update/{email}")
-    public Customer updateCustomer(@PathVariable String email, @RequestBody Customer customer){return customersService.updateCustomer(email, customer);}
+    public Customer updateCustomer(@PathVariable String email, @RequestBody Customer customer) {
+        return customersService.updateCustomer(email, customer);
+    }
+
     @DeleteMapping("/delete/{email}")
-    public Customer deleteCustomer(@PathVariable String email){return customersService.deleteCustomer(email);}
+    public Customer deleteCustomer(@PathVariable String email) {
+        return customersService.deleteCustomer(email);
+    }
 }

@@ -9,16 +9,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/notifications")
 public class NotificationController {
     NotificationService notificationService;
-    NotificationController(NotificationService notificationService){
+
+    NotificationController(NotificationService notificationService) {
         this.notificationService = notificationService;
     }
 
     @GetMapping("/getMostSentTemplates")
-    public String getMostSentTemplates(){
+    public String getMostSentTemplates() {
         return notificationService.getMostSentTemplates();
     }
+
     @GetMapping("/getMostNotifiedContactAddresses")
-    public String MostNotifiedContactAddresses(){
+    public String MostNotifiedContactAddresses() {
 
         return notificationService.getMostNotifiedContactAddresses();
     }

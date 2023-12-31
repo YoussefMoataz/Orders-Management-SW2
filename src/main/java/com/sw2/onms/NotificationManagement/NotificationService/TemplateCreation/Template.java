@@ -4,33 +4,36 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Template {
-    private Map<Language,String> contents;
+    private Map<Language, String> contents;
     private String contentWithActualVal;
-    private  String latestSentTemplate;
-    Template(Map<Language,String> contents){
+    private String latestSentTemplate;
+
+    Template(Map<Language, String> contents) {
         this.contents = contents;
     }
-    Template(Language language, String newContent){
+
+    Template(Language language, String newContent) {
         contents = new HashMap<>();
-        contents.put(language,newContent);
+        contents.put(language, newContent);
         contentWithActualVal = newContent;
     }
-    public String setPlaceholders(Map<Placeholder, String> placeholders, Language language){
-        if(contents.containsKey(language)){
+
+    public String setPlaceholders(Map<Placeholder, String> placeholders, Language language) {
+        if (contents.containsKey(language)) {
             String message = contents.get(language);
             latestSentTemplate = message;
             boolean flag = true;
-            for(int i = 0;i < latestSentTemplate.length();i++){
-                if(latestSentTemplate.charAt(i)=='{'){
+            for (int i = 0; i < latestSentTemplate.length(); i++) {
+                if (latestSentTemplate.charAt(i) == '{') {
                     String key = "";
                     i++;
-                    for(;i < latestSentTemplate.length() && latestSentTemplate.charAt(i) != '}'; i++){
+                    for (; i < latestSentTemplate.length() && latestSentTemplate.charAt(i) != '}'; i++) {
                         key += latestSentTemplate.charAt(i);
                     }
                     Placeholder placeholderKey = Placeholder.found(key);
                     if (placeholderKey != null && placeholders.containsKey(placeholderKey)) {
-                        String val =  placeholders.get(placeholderKey);
-                        if(placeholders.get(placeholderKey).contains(","))
+                        String val = placeholders.get(placeholderKey);
+                        if (placeholders.get(placeholderKey).contains(","))
                             val = "{" + val + "}";
                         message = message.replace("{" + key + "}", val);
                     }//this mean that there will be a variable in the content does not have a value as this
@@ -40,23 +43,27 @@ public class Template {
                     i++;
                 }
             }
-            if(!flag)
+            if (!flag)
                 return null;
             contentWithActualVal = message;
             return message;
         }
-        return  null;
+        return null;
     }
+
     public String getContentWithActualVal() {
         return contentWithActualVal;
-    }public String getLatestSentTemplate() {
-        return latestSentTemplate;
     }
 
     public void setContentWithActualVal(String contentWithActualVal) {
         this.contentWithActualVal = contentWithActualVal;
     }
-    public void addNewTemplateLanguage(Language language, String content){
+
+    public String getLatestSentTemplate() {
+        return latestSentTemplate;
+    }
+
+    public void addNewTemplateLanguage(Language language, String content) {
         contents.put(language, content);
     }
 }

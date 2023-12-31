@@ -11,7 +11,7 @@ import java.util.List;
 public class ProductsRepo {
     private final HashMap<Long, Product> products;
 
-    public ProductsRepo(){
+    public ProductsRepo() {
         products = new HashMap<>();
 
         // dummy products for testing purpose
@@ -24,51 +24,51 @@ public class ProductsRepo {
         products.put(10007L, new Product(10007L, "V7", "V7", "beverages", 15.0, 12));
     }
 
-    public Product add(Product product){
+    public Product add(Product product) {
         products.put(product.getSerialNumber(), product);
         return products.get(product.getSerialNumber());
     }
 
-    public Product update(long serialNumber, Product product){
+    public Product update(long serialNumber, Product product) {
         products.put(serialNumber, product);
         return products.get(serialNumber);
     }
 
-    public Product delete(long serialNumber){
+    public Product delete(long serialNumber) {
         return products.remove(serialNumber);
     }
 
-    public Product getBySerialNumber(long serialNumber){
+    public Product getBySerialNumber(long serialNumber) {
         return products.get(serialNumber);
     }
 
-    public Product getByName(String name){
-        for(Product product: products.values()){
-            if(product.getName().equals(name)){
+    public Product getByName(String name) {
+        for (Product product : products.values()) {
+            if (product.getName().equals(name)) {
                 return product;
             }
         }
         return null;
     }
 
-    public List<Product> getByCategory(String category){
+    public List<Product> getByCategory(String category) {
         ArrayList<Product> matchingProducts = new ArrayList<>();
-        for(Product product: products.values()){
-            if(product.getCategory().equals(category)){
+        for (Product product : products.values()) {
+            if (product.getCategory().equals(category)) {
                 matchingProducts.add(product);
             }
         }
         return matchingProducts;
     }
 
-    public List<Product> getAll(){
+    public List<Product> getAll() {
         return products.values().stream().toList();
     }
 
-    public List<Product> getAvailable(){
+    public List<Product> getAvailable() {
         ArrayList<Product> availableProducts = new ArrayList<>();
-        for(Product product: products.values()){
-            if(product.getCount() > 0){
+        for (Product product : products.values()) {
+            if (product.getCount() > 0) {
                 availableProducts.add(product);
             }
         }

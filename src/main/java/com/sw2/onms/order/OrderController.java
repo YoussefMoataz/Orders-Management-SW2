@@ -21,28 +21,28 @@ public class OrderController {
     }
 
     @GetMapping("/list_details")
-    public ResponseEntity<Map<Integer, Order>> listDetails(){
+    public ResponseEntity<Map<Integer, Order>> listDetails() {
         return new ResponseEntity<>(orderService.listOrdersDetails(), HttpStatus.OK);
     }
 
-    @PostMapping (value = "/place_order")
-    public ResponseEntity<String> placeOrder(@RequestBody Order order){
+    @PostMapping(value = "/place_order")
+    public ResponseEntity<String> placeOrder(@RequestBody Order order) {
         orderService.placeOrder(order);
         return new ResponseEntity<>("* Check the console for the notification", HttpStatus.CREATED);
     }
 
-    @PutMapping (value = "/ship/{ID}")
-    public ResponseEntity<String> shipOrder(@PathVariable("ID") int ID){
+    @PutMapping(value = "/ship/{ID}")
+    public ResponseEntity<String> shipOrder(@PathVariable("ID") int ID) {
         orderService.shipOrder(ID);
         return new ResponseEntity<>("* Check the console for the notification", HttpStatus.ACCEPTED);
     }
 
-    @PutMapping (value = "/cancel/{ID}")
-    public ResponseEntity<String> cancelOrder(@PathVariable("ID") int ID){
+    @PutMapping(value = "/cancel/{ID}")
+    public ResponseEntity<String> cancelOrder(@PathVariable("ID") int ID) {
         boolean isCancelled = orderService.cancelOrder(ID);
-        if(isCancelled){
+        if (isCancelled) {
             return new ResponseEntity<>("Order cancelled successfully", HttpStatus.OK);
-        }else{
+        } else {
             return new ResponseEntity<>("Couldn't cancel order", HttpStatus.OK);
         }
     }

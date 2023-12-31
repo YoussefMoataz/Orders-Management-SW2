@@ -1,9 +1,6 @@
-package com.sw2.onms.NotificationManagement.TemplateCreation;
-
-import com.sw2.onms.NotificationManagement.Operation;
+package com.sw2.onms.NotificationManagement.NotificationService.TemplateCreation;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Template {

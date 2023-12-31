@@ -1,6 +1,8 @@
-package com.sw2.onms.NotificationManagement;
+package com.sw2.onms.NotificationManagement.NotificationService;
 
-public class SMSSender  extends NotificationSender{
+import com.sw2.onms.NotificationManagement.NotificationService.NotificationSender;
+
+public class SMSSender  extends NotificationSender {
 
 
     public String send(String message, String contentAddress){

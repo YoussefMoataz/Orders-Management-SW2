@@ -1,4 +1,4 @@
-package com.sw2.onms.NotificationManagement.TemplateCreation;
+package com.sw2.onms.NotificationManagement.NotificationService.TemplateCreation;
 
 public enum Placeholder {
     CustomerName,OrderID,OrderPrice,DetailedOrderContent,Products;
@@ -11,14 +11,3 @@ public enum Placeholder {
         return null;  // Return null if not found
     }
 }
-/*
-
-public boolean found(String val) {
-        for (Placeholder p : Placeholder.values()) {
-            if (p.name().equals(val)) {
-                return true;
-            }
-        }
-        return false;
-    }
-*/

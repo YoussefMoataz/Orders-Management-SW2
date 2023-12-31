@@ -1,15 +1,16 @@
-package com.sw2.onms.NotificationManagement.TemplateCreation;
+package com.sw2.onms.NotificationManagement.NotificationService.TemplateCreation;
 
-import com.sw2.onms.NotificationManagement.Operation;
+import com.sw2.onms.NotificationManagement.NotificationService.Operation;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
 
 public class TemplateCreator {
-    //is this must be @Component
-    TemplateDB templateDB;
+
+    //@Autowired
+    TemplateDB templateDB = new TemplateDB();
     Template defualtTemplate;
     public TemplateCreator(){
-        templateDB = new TemplateDB();
         defualtTemplate = new Template(Language.English,"Welcome to you in our store :)");
     }
     public Template createTemplate(Operation operation, Map<Placeholder, String> placeholders, Language tempLanguage){

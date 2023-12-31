@@ -1,16 +1,15 @@
 package com.sw2.onms.NotificationManagement.NotificationService.TemplateCreation;
 
 import com.sw2.onms.NotificationManagement.NotificationService.Operation;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 //@Component
-public class TemplateDB {
+public class TemplateRepo {
     private Map<Operation, List<Template>> templates;
-    TemplateDB(){
+    TemplateRepo(){
         templates = new HashMap<>();
 
         Template ordPlacementTemplate1 = new Template(Language.English, "Dear {"+ Placeholder.CustomerName.name() +"}, your booking of the {" + Placeholder.Products + "} is confirmed. thanks for using our store :) ");

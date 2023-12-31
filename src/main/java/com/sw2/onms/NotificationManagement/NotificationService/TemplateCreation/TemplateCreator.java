@@ -1,20 +1,19 @@
 package com.sw2.onms.NotificationManagement.NotificationService.TemplateCreation;
 
 import com.sw2.onms.NotificationManagement.NotificationService.Operation;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
 
 public class TemplateCreator {
 
     //@Autowired
-    TemplateDB templateDB = new TemplateDB();
+    TemplateRepo templateRepo = new TemplateRepo();
     Template defualtTemplate;
     public TemplateCreator(){
         defualtTemplate = new Template(Language.English,"Welcome to you in our store :)");
     }
     public Template createTemplate(Operation operation, Map<Placeholder, String> placeholders, Language tempLanguage){
-        List<Template> templets = templateDB.get(operation);
+        List<Template> templets = templateRepo.get(operation);
         List<Template> ActualPlaceholdersTemplate = new ArrayList<>();
         for(Template t : templets){
             String message = t.setPlaceholders(placeholders,tempLanguage);
@@ -27,6 +26,6 @@ public class TemplateCreator {
         return ActualPlaceholdersTemplate.get(random.nextInt(0,ActualPlaceholdersTemplate.size()));
     }
     public void addNewTemplateType(Operation operation, String templateContent, Language tempLanguage){
-        templateDB.addNewTemplateType(operation, templateContent, tempLanguage);
+        templateRepo.addNewTemplateType(operation, templateContent, tempLanguage);
     }
 }

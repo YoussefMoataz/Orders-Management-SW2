@@ -41,13 +41,16 @@ public class OrderService {
     public void placeOrder(Order order){
         order.setOrderState(OrderState.PLACED);
         Customer customer1 = order.getCustomer();
+        if(order.getProductsCount() != null) {
+            order.setProducts(order.getProductsCount());
+        }
         customer1.setBalance(customer1.getBalance() - order.getPrice());
         for(Order component: order.getComponents()){
             component.setOrderState(OrderState.PLACED);
-            component.getCustomer().setBalance(component.getCustomer().getBalance() - component.getPrice());
             if(component.getProductsCount() != null) {
                 component.setProducts(component.getProductsCount());
             }
+            component.getCustomer().setBalance(component.getCustomer().getBalance() - component.getPrice());
             for(long productSerial:component.getProductsSerialNumbers()){
                 Product product = productsRepo.getBySerialNumber(productSerial);
                 product.setCount(product.getCount()-component.getCount(productSerial));

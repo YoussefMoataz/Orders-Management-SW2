@@ -3,34 +3,73 @@ package com.sw2.onms.NotificationManagement;
 import java.util.*;
 
 import com.sw2.onms.NotificationManagement.TemplateCreation.Placeholder;
+import com.sw2.onms.NotificationManagement.TemplateCreation.Template;
 import com.sw2.onms.NotificationManagement.TemplateCreation.TemplateCreator;
 import com.sw2.onms.customer.model.Customer;
 import com.sw2.onms.order.Order;
-import com.sw2.onms.order.OrderRepository;
-import com.sw2.onms.product.model.Product;
 
 public class NotificationManager {
-    private OrderRepository orderRepository = OrderRepository.getInstance();
     private Queue<Notification> notificationQueue = new LinkedList<>() ;
     private  Map<String,Map<Placeholder, String>> CustomerPlaceholders = new HashMap<>();
     private  Map<String, Customer> orderCustomers = new HashMap<>();
+    private  Map<String, Integer> mostNotifiedContactAddresses = new HashMap<>();
+    private  Map<String, Integer> mostSentTemplates = new HashMap<>();
     private TemplateCreator templateCreator = new TemplateCreator();
-
+    private Map<NotificationSenderType,Class<? extends NotificationSender>>senders;
+    public NotificationManager(){
+        senders = new HashMap<>();
+        senders.put(NotificationSenderType.Email,EmailSender.class);
+        senders.put(NotificationSenderType.SMS,SMSSender.class);
+    }
     public  String sendNotification(Operation operation, Order order){
         if(order != null){
             reqGetPLaceholders(order);
             for (Map.Entry<String, Customer> entry : orderCustomers.entrySet()) {
-                String messageToBeSent = templateCreator.createTemplate(operation,CustomerPlaceholders.get(entry.getKey()),entry.getValue().getPreferredLanguage());
+                Template messageToBeSent = templateCreator.createTemplate(operation,CustomerPlaceholders.get(entry.getKey()),entry.getValue().getPreferredLanguage());
                 Notification newNotification = new Notification(messageToBeSent,entry.getValue().getPreferredNotificationChannel(),entry.getKey());
                 notificationQueue.add(newNotification);
-                System.out.println(messageToBeSent);
+                System.out.println(newNotification.message.getLatestSentTemplate());
+                System.out.println(newNotification.message.getContentWithActualVal());
             }
             return "Notification has been sent successfully";
         }
         return "Notification has not been sent, as order is null";
     }
+    public String getMostSentTemplates(){
+        List<Map.Entry<String, Integer>> entryList = new ArrayList<>(mostSentTemplates.entrySet());
+        entryList.sort(Map.Entry.<String, Integer>comparingByValue().reversed());
+        String sortedTemplates = "";
+        // Iterate over the sorted Templates according to its frequency
+        for (Map.Entry<String, Integer> entry : entryList) {
+            sortedTemplates += "Template: \n" + entry.getKey() + "\n, Frequency: " + entry.getValue()+"\n";
+        }
+        return sortedTemplates;
+    }
     private void SendNotificationFromQueue(){
+        Notification notificationToBeSent = notificationQueue.poll();
+        if(senders.containsKey(notificationToBeSent.senderType)) {
+            try{
+                NotificationSender sender = senders.get(notificationToBeSent.senderType).newInstance();
+                //If method send returns a message contains Incorrect word this is means that contact address is incorrect
+                if(!sender.send(notificationToBeSent.message.getContentWithActualVal(),notificationToBeSent.contactAddress).contains("Incorrect")){
+                    int counter = 1;
+                    if(mostSentTemplates.containsKey(notificationToBeSent.message.getLatestSentTemplate())){
+                        counter = mostSentTemplates.get(notificationToBeSent.message.getLatestSentTemplate()) + 1;
+                        mostSentTemplates.put(notificationToBeSent.message.getLatestSentTemplate(), counter);
+                    }else{
+                        mostSentTemplates.put(notificationToBeSent.message.getLatestSentTemplate(), 1);
+                    }
+                    if(mostNotifiedContactAddresses.containsKey(notificationToBeSent.contactAddress)){
+                        counter = mostNotifiedContactAddresses.get(notificationToBeSent.contactAddress) + 1;
+                        mostNotifiedContactAddresses.put(notificationToBeSent.contactAddress, counter);
+                    }else
+                        mostNotifiedContactAddresses.put(notificationToBeSent.contactAddress, 1);
 
+                }
+            } catch (InstantiationException | IllegalAccessException e) {
+                e.printStackTrace(); // Handle the exception appropriately in your application
+            }
+        }
     }
     private void reqGetPLaceholders(Order curOrder){
         if( curOrder != null){

@@ -5,24 +5,27 @@ import com.sw2.onms.NotificationManagement.Operation;
 import java.util.*;
 
 public class TemplateCreator {
-    Map<Operation,List<Template>> templates;
     //is this must be @Component
-    TemplateDB templateDB = new TemplateDB();
+    TemplateDB templateDB;
+    Template defualtTemplate;
     public TemplateCreator(){
-        templates = new HashMap<>();
+        templateDB = new TemplateDB();
+        defualtTemplate = new Template(Language.English,"Welcome to you in our store :)");
     }
-    public String createTemplate(Operation operation, Map<Placeholder, String> placeholders, Language tempLanguage){
+    public Template createTemplate(Operation operation, Map<Placeholder, String> placeholders, Language tempLanguage){
         List<Template> templets = templateDB.get(operation);
-        List<String> templatesContents = new ArrayList<>();
+        List<Template> ActualPlaceholdersTemplate = new ArrayList<>();
         for(Template t : templets){
             String message = t.setPlaceholders(placeholders,tempLanguage);
             if(message != null)
-                templatesContents.add(message);
+                ActualPlaceholdersTemplate.add(t);
         }
         Random random = new Random();
-        return templatesContents.get(random.nextInt(0,templatesContents.size()));
-    }/*
+        if(ActualPlaceholdersTemplate.size() < 1)
+            return defualtTemplate;
+        return ActualPlaceholdersTemplate.get(random.nextInt(0,ActualPlaceholdersTemplate.size()));
+    }
     public void addNewTemplateType(Operation operation, String templateContent, Language tempLanguage){
-
-    }*/
+        templateDB.addNewTemplateType(operation, templateContent, tempLanguage);
+    }
 }

@@ -7,25 +7,28 @@ import java.util.List;
 import java.util.Map;
 
 public class Template {
-    Map<Language,String> contents;
-    Operation corespondingOperation;
+    private Map<Language,String> contents;
+    private String contentWithActualVal;
+    private  String latestSentTemplate;
     Template(Map<Language,String> contents){
         this.contents = contents;
     }
     Template(Language language, String newContent){
         contents = new HashMap<>();
         contents.put(language,newContent);
+        contentWithActualVal = newContent;
     }
     public String setPlaceholders(Map<Placeholder, String> placeholders, Language language){
         if(contents.containsKey(language)){
-            String message = contents.get(language),content = message;
+            String message = contents.get(language);
+            latestSentTemplate = message;
             boolean flag = true;
-            for(int i = 0;i<content.length();i++){
-                if(content.charAt(i)=='{'){
+            for(int i = 0;i < latestSentTemplate.length();i++){
+                if(latestSentTemplate.charAt(i)=='{'){
                     String key = "";
                     i++;
-                    for(;i < content.length() && content.charAt(i) != '}'; i++){
-                        key += content.charAt(i);
+                    for(;i < latestSentTemplate.length() && latestSentTemplate.charAt(i) != '}'; i++){
+                        key += latestSentTemplate.charAt(i);
                     }
                     Placeholder placeholderKey = Placeholder.found(key);
                     if (placeholderKey != null && placeholders.containsKey(placeholderKey)) {
@@ -42,9 +45,19 @@ public class Template {
             }
             if(!flag)
                 return null;
+            contentWithActualVal = message;
             return message;
         }
         return  null;
+    }
+    public String getContentWithActualVal() {
+        return contentWithActualVal;
+    }public String getLatestSentTemplate() {
+        return latestSentTemplate;
+    }
+
+    public void setContentWithActualVal(String contentWithActualVal) {
+        this.contentWithActualVal = contentWithActualVal;
     }
     public void addNewTemplateLanguage(Language language, String content){
         contents.put(language, content);

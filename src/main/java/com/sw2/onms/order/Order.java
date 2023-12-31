@@ -2,12 +2,15 @@ package com.sw2.onms.order;
 
 import com.sw2.onms.customer.model.Customer;
 import com.sw2.onms.product.model.Product;
+import com.sw2.onms.product.repo.ProductsRepo;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Youssef Moataz
@@ -20,9 +23,12 @@ public class Order {
     @Getter
     @Setter
     private int orderID;
-    @Getter(AccessLevel.NONE)
-    @Setter
+    @Getter(AccessLevel.PRIVATE)
+//    @Setter
     private List<Product> products;
+    @Getter(AccessLevel.PUBLIC)
+//    @Setter
+    private Map<Long, Integer> productsCount;
     @Getter
     @Setter
     private List<Order> components;
@@ -38,6 +44,8 @@ public class Order {
 
     public Order(){
         components = new ArrayList<>();
+        products = new ArrayList<>();
+        productsCount = new HashMap<>();
     }
 
     public Order(List<Product> products, List<Order> components, String address, Customer customer){
@@ -89,6 +97,28 @@ public class Order {
             productsSerialNumbers.add(p.getSerialNumber());
         }
         return productsSerialNumbers;
+    }
+
+    public Integer getCount(Long serial){
+        for (Product p: products) {
+            if (p != null) {
+                if (p.getSerialNumber() == serial) {
+                    return p.getCount();
+                }
+            }
+        }
+        return 0;
+    }
+
+    public void setProducts(Map<Long, Integer> productsCount){
+        ProductsRepo productsRepo = new ProductsRepo();
+        List<Product> productsList = new ArrayList<>();
+        for(Map.Entry<Long, Integer> pair: productsCount.entrySet()){
+            Product product = productsRepo.getBySerialNumber(pair.getKey());
+            product.setCount(pair.getValue());
+            productsList.add(product);
+        }
+        products = productsList;
     }
 
 }

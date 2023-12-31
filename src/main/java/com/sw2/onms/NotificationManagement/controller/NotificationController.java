@@ -9,7 +9,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/notifications")
 public class NotificationController {
-    NotificationManager notificationService;// = new NotificationManager();
+    NotificationManager notificationService;
+    NotificationController(NotificationManager notificationService){
+        this.notificationService = notificationService;
+    }
+
     @GetMapping("/getMostSentTemplates")
     public String getMostSentTemplates(){
         return notificationService.getMostSentTemplates();

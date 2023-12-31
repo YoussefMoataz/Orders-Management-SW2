@@ -22,11 +22,12 @@ import java.util.Map;
 public class OrderService {
 
     private OrderRepository orderRepository;
-    private NotificationManager notificationManager = new NotificationManager();
+    private NotificationManager notificationManager;
     //private NotificationManager notificationManager = new NotificationManager();
     private int shippingFees = 50;
 
-    public OrderService() {
+    public OrderService(NotificationManager notificationService){
+        this.notificationManager = notificationService;
         this.orderRepository = OrderRepository.getInstance();
         generateDummyOrders();
     }

@@ -1,7 +1,7 @@
 package com.sw2.onms.customer.repo;
 
-import com.sw2.onms.NotificationManagement.NotificationSenderType;
-import com.sw2.onms.NotificationManagement.TemplateCreation.Language;
+import com.sw2.onms.NotificationManagement.NotificationService.NotificationSenderType;
+import com.sw2.onms.NotificationManagement.NotificationService.TemplateCreation.Language;
 import com.sw2.onms.customer.model.Customer;
 import org.springframework.stereotype.Repository;
 

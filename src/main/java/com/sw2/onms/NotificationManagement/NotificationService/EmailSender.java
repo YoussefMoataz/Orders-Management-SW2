@@ -1,6 +1,6 @@
-package com.sw2.onms.NotificationManagement;
+package com.sw2.onms.NotificationManagement.NotificationService;
 
-public class EmailSender extends NotificationSender{
+public class EmailSender extends NotificationSender {
 
     String send(String message, String contentAddress){
         this.contentAddress = contentAddress;

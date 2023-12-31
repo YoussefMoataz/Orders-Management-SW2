@@ -17,15 +17,15 @@ public class OrderController {
     }
 
     @PostMapping (value = "/place_order")
-    public ResponseEntity<Void> placeOrder(@RequestBody Order order){
+    public ResponseEntity<String> placeOrder(@RequestBody Order order){
         orderService.placeOrder(order);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>("* Check the console for the notification", HttpStatus.CREATED);
     }
 
     @PutMapping (value = "/ship/{ID}")
-    public ResponseEntity<Void> shipOrder(@PathVariable("ID") int ID){
+    public ResponseEntity<String> shipOrder(@PathVariable("ID") int ID){
         orderService.shipOrder(ID);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<>("* Check the console for the notification", HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/list_details")

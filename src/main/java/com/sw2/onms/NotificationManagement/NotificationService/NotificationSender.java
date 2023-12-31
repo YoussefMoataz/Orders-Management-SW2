@@ -1,4 +1,4 @@
-package com.sw2.onms.NotificationManagement;
+package com.sw2.onms.NotificationManagement.NotificationService;
 
 public abstract class NotificationSender {
     protected String message;

@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/customer")
-public class CustomerController {
+public class  CustomerController {
     CustomersService customersService;
     CustomerController(CustomersRepo customersRepo){
         this.customersService = new CustomersService(customersRepo);

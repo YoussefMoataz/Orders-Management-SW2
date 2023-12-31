@@ -1,4 +1,4 @@
-package com.sw2.onms.NotificationManagement.TemplateCreation;
+package com.sw2.onms.NotificationManagement.NotificationService.TemplateCreation;
 
 public enum Placeholder {
     CustomerName,OrderID,OrderPrice,DetailedOrderContent,Products;

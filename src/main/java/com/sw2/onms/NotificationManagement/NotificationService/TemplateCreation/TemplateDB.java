@@ -1,14 +1,14 @@
-package com.sw2.onms.NotificationManagement.TemplateCreation;
+package com.sw2.onms.NotificationManagement.NotificationService.TemplateCreation;
 
-import com.sw2.onms.NotificationManagement.Operation;
+import com.sw2.onms.NotificationManagement.NotificationService.Operation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@Component
 public class TemplateDB {
-    private Map<Operation, List<Template>> templates;;
+    private Map<Operation, List<Template>> templates;
     TemplateDB(){
         templates = new HashMap<>();
 

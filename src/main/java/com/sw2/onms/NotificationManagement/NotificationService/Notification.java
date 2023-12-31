@@ -1,6 +1,6 @@
-package com.sw2.onms.NotificationManagement;
+package com.sw2.onms.NotificationManagement.NotificationService;
 
-import com.sw2.onms.NotificationManagement.TemplateCreation.Template;
+import com.sw2.onms.NotificationManagement.NotificationService.TemplateCreation.Template;
 
 public class Notification {
     private Template message;

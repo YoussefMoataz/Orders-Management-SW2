@@ -1,12 +1,10 @@
 package com.sw2.onms.order;
 
-import com.sw2.onms.NotificationManagement.NotificationSenderType;
-import com.sw2.onms.NotificationManagement.Operation;
-import com.sw2.onms.NotificationManagement.TemplateCreation.Language;
+import com.sw2.onms.NotificationManagement.NotificationService.Operation;
 import com.sw2.onms.customer.model.Customer;
 import com.sw2.onms.customer.repo.CustomersRepo;
 import com.sw2.onms.product.model.Product;
-import com.sw2.onms.NotificationManagement.NotificationManager;
+import com.sw2.onms.NotificationManagement.NotificationService.NotificationManager;
 import com.sw2.onms.product.repo.ProductsRepo;
 import org.springframework.stereotype.Service;
 

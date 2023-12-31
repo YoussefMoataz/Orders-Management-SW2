@@ -11,9 +11,9 @@ import com.sw2.onms.product.repo.ProductsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.sql.Time;
+import java.time.LocalTime;
+import java.util.*;
 
 /**
  * @author Hassan Magdi
@@ -27,10 +27,13 @@ public class OrderService {
     @Autowired
     private ProductsRepo productsRepo;
     private NotificationManager notificationManager;
+    private CustomersRepo customersRepo;
     private int shippingFees = 50;
+    private Long validTime = 30000l;
 
-    public OrderService(NotificationManager notificationManager) {
+    public OrderService(NotificationManager notificationManager, CustomersRepo customersRepo) {
         this.notificationManager=notificationManager;
+        this.customersRepo = customersRepo;
         this.orderRepository = OrderRepository.getInstance();
         this.productsRepo = new ProductsRepo();
         generateDummyOrders();
@@ -47,6 +50,7 @@ public class OrderService {
             order.setProducts(order.getProductsCount());
         }
         customer1.setBalance(customer1.getBalance() - order.getPrice());
+        customersRepo.update(customer1.getEmail(), customer1);
         for(long productSerial:order.getProductsSerialNumbers()){
             Product product = productsRepo.getBySerialNumber(productSerial);
             product.setCount(product.getCount()-order.getCount(productSerial));
@@ -58,6 +62,7 @@ public class OrderService {
                 component.setProducts(component.getProductsCount());
             }
             component.getCustomer().setBalance(component.getCustomer().getBalance() - component.getPrice());
+            customersRepo.update(component.getCustomer().getEmail(), component.getCustomer());
             for(long productSerial:component.getProductsSerialNumbers()){
                 Product product = productsRepo.getBySerialNumber(productSerial);
                 product.setCount(product.getCount()-component.getCount(productSerial));
@@ -71,6 +76,7 @@ public class OrderService {
     public void shipOrder(int orderID){
         orderRepository.updateState(orderID,OrderState.SHIPPING);
         Order order = orderRepository.searchOrder(orderID);
+        order.setShippingTime(Time.valueOf(LocalTime.now()).getTime());
         order.getCustomer().setBalance(order.getCustomer().getBalance() - shippingFees);
         for(Order component: order.getComponents()){
             component.setOrderState(OrderState.SHIPPING);
@@ -80,8 +86,54 @@ public class OrderService {
         notificationManager.sendNotification(Operation.OrderShipment,order);
     }
 
+    public boolean cancelOrder(int orderID){
+        Order order = orderRepository.searchOrder(orderID);
+
+        if(order.getOrderState()==OrderState.PLACED){
+            order.setOrderState(OrderState.CANCELLED);
+            for(Long productSN:order.getProductsSerialNumbers()){
+                Product product = productsRepo.getBySerialNumber(productSN);
+                product.setCount(product.getCount()+order.getCount(productSN));
+            }
+            order.getCustomer().setBalance(order.getCustomer().getBalance()+order.getPrice());
+            customersRepo.update(order.getCustomer().getEmail(), order.getCustomer());
+            for(Order component: order.getComponents()){
+                component.getCustomer().setBalance(component.getCustomer().getBalance()+component.getPrice());
+                customersRepo.update(component.getCustomer().getEmail(), component.getCustomer());
+                component.setOrderState(OrderState.CANCELLED);
+                for(Long productSN:order.getProductsSerialNumbers()){
+                    Product product = productsRepo.getBySerialNumber(productSN);
+                    product.setCount(product.getCount()+order.getCount(productSN));
+                }
+            }
+            return true;
+        }
+
+        if(order.getOrderState()==OrderState.SHIPPING){
+            if(Time.valueOf(LocalTime.now()).getTime() - order.getShippingTime()<=validTime){
+                order.setOrderState(OrderState.CANCELLED);
+                for(Long productSN:order.getProductsSerialNumbers()){
+                    Product product = productsRepo.getBySerialNumber(productSN);
+                    product.setCount(product.getCount()+order.getCount(productSN));
+                }
+                order.getCustomer().setBalance(order.getCustomer().getBalance()+order.getPrice());
+                customersRepo.update(order.getCustomer().getEmail(), order.getCustomer());
+                for(Order component: order.getComponents()){
+                    component.getCustomer().setBalance(component.getCustomer().getBalance()+component.getPrice());
+                    customersRepo.update(component.getCustomer().getEmail(), component.getCustomer());
+                    component.setOrderState(OrderState.CANCELLED);
+                    for(Long productSN:order.getProductsSerialNumbers()){
+                        Product product = productsRepo.getBySerialNumber(productSN);
+                        product.setCount(product.getCount()+order.getCount(productSN));
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void generateDummyOrders(){
-        CustomersRepo customersRepo = new CustomersRepo();
         Customer customer1=customersRepo.get("hassan@gmail.com");
         customer1.setBalance(12000.0);
         Customer customer2=customersRepo.get("maged@gmail.com");

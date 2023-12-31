@@ -9,6 +9,10 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Youssef Moataz
+ * @author Hassan Magdi
+ */
 @Getter
 @Setter
 public class Order {
@@ -67,6 +71,10 @@ public class Order {
         components.add(component);
     }
 
+    /**
+     * Used in {@link com.sw2.onms.NotificationManagement.NotificationManager}
+     * @return List of product names
+     */
     public List<String> getProductsNames(){
         List<String> productNames = new ArrayList<>();
         for (Product p : products) {
